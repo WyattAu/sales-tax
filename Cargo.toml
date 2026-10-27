@@ -1,0 +1,20 @@
+[package]
+name = "sales-tax"
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.85"
+description = "US sales tax document arithmetic — nexus-gated, destination-sourced, exact rational rates, explicit rounding scope. Rates and taxability are inputs; the rate database is a data service, not a library"
+license = "MIT OR Apache-2.0"
+repository = "https://github.com/WyattAu/sales-tax"
+keywords = ["sales-tax", "accounting", "finance", "tax", "us"]
+categories = ["finance"]
+
+[dependencies]
+fx-kit = "=0.1.4"
+vat-rules = "=0.1.1"
+
+[lints.clippy]
+unwrap_used = "deny"
+expect_used = "deny"
+indexing_slicing = "deny"
+panic = "deny"
