@@ -13,6 +13,9 @@ categories = ["finance"]
 fx-kit = "=0.1.4"
 vat-rules = "=0.1.1"
 
+[dev-dependencies]
+proptest = "1"
+
 [lints.clippy]
 unwrap_used = "deny"
 expect_used = "deny"
