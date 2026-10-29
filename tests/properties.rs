@@ -7,7 +7,7 @@
 
 use proptest::prelude::*;
 use sales_tax::{
-    compute_tax, JurisdictionLevel, JurisdictionRate, NexusRegistry, RoundingScope, SaleLine,
+    JurisdictionLevel, JurisdictionRate, NexusRegistry, RoundingScope, SaleLine, compute_tax,
 };
 use vat_rules::TieMode;
 
@@ -23,19 +23,22 @@ fn quoted_percent() -> impl Strategy<Value = String> {
 
 fn lines_strategy() -> impl Strategy<Value = Vec<SaleLine>> {
     proptest::collection::vec(
-        (1i64..100_000i64, any::<bool>()).prop_map(|(net, taxable)| SaleLine { net_minor: net, taxable }),
+        (1i64..100_000i64, any::<bool>()).prop_map(|(net, taxable)| SaleLine {
+            net_minor: net,
+            taxable,
+        }),
         1..12,
     )
 }
 
 fn rates_strategy() -> impl Strategy<Value = Vec<JurisdictionRate>> {
     proptest::collection::vec(quoted_percent(), 1..4).prop_map(|quoted| {
+        let levels = JurisdictionLevel::ALL.iter().cycle();
         quoted
             .into_iter()
-            .enumerate()
-            .map(|(i, q)| {
-                let level = JurisdictionLevel::ALL[i % JurisdictionLevel::ALL.len()];
-                JurisdictionRate::from_percent(level, "jurisdiction", &q)
+            .zip(levels)
+            .map(|(q, level)| {
+                JurisdictionRate::from_percent(*level, "jurisdiction", &q)
                     .expect("strategy generates valid rates")
             })
             .collect()
