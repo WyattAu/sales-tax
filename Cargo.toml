@@ -1,6 +1,6 @@
 [package]
 name = "sales-tax"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 rust-version = "1.85"
 description = "US sales tax document arithmetic — nexus-gated, destination-sourced, exact rational rates, explicit rounding scope. Rates and taxability are inputs; the rate database is a data service, not a library"
